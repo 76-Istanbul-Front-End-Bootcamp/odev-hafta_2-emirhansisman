@@ -10,7 +10,7 @@ var person = {
   }
 }
 
-var messageFunc = person.message
+var messageFunc = person.message.bind(person);
 messageFunc();
 
 
@@ -25,12 +25,10 @@ messageFunc();
 var numbers = {
   numbers: [[10,20,30], 2],
   multiply: function(){
-    this.numbers[0].map(function(number, numberIndex){
-        const result = number * this.numbers[1];
-        console.log(result)
-    })
+    const result = this.numbers[0].map(x => x * this.numbers[1]);
+    console.log(result);
   }
-};
+}
 
 numbers.multiply();
 
@@ -43,7 +41,7 @@ numbers.multiply();
   Ornek : isValidName(" J ohn") false donmeli
 */
 function isValidName(name){
-
+  return /^[A-Z][a-z]+$/gm.test(name);
 }
 
 /*
@@ -59,7 +57,13 @@ function isValidName(name){
   Ornek: katilimSaati("5", "30") 150 sonucunu vermelidir.
 */
 function katilimSaati(dersSayisi, dersSuresi){
-
+  for(let i = 0; i < arguments.length; i++) {
+    if(typeof(arguments[i]) != 'string' && typeof(arguments[i]) != 'number') {
+      console.log(arguments[i] + " " + typeof(arguments[i]) + " tipindedir. 'Number' ya da 'String' tipinde bir deger giriniz.");
+      return;
+    }
+  }
+  return Number(dersSayisi) * Number(dersSuresi);
 }
 
 
