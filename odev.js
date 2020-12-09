@@ -41,8 +41,30 @@ numbers.multiply();
   Ornek : isValidName(" J ohn") false donmeli
 */
 function isValidName(name){
-  return /^[A-Z][a-z]+$/gm.test(name);
+  if(typeof(name) === 'string') {
+    let trimmedName = name.trim();
+    let dividedBySpaces = trimmedName.split(' ');
+    for(let word of dividedBySpaces) {
+      if(word.length <= 1) {
+        console.log('Invalid name');
+        return false;
+      }
+    }
+    return true;
+  }
+  console.log('Invalid type');
+  return false;
 }
+/*
+  Test Cases:
+  console.log(isValidName("Frank") === true);
+  console.log(isValidName(false) === false);
+  console.log(isValidName(null) === false);
+  console.log(isValidName(undefined) === false);
+  console.log(isValidName("") === false);
+  console.log(isValidName("  \t\n") === false);
+  console.log(isValidName("X") === false);
+*/
 
 /*
   Odev 4:
