@@ -41,22 +41,23 @@ numbers.multiply();
   Ornek : isValidName(" J ohn") false donmeli
 */
 function isValidName(name){
-  if(typeof(name) === 'string') {
-    let trimmedName = name.trim();
-    let dividedBySpaces = trimmedName.split(' ');
-    for(let word of dividedBySpaces) {
-      if(word.length <= 1) {
-        console.log('Invalid name');
-        return false;
+    if(typeof(name) === 'string') {
+      let trimmedName = name.trim();
+      let dividedBySpaces = trimmedName.split(' ');
+      for(let word of dividedBySpaces) {
+        if(word.length <= 1) {
+          //throw 'Invalid name';
+          console.log('Invalid name');
+          return false;
+        }
       }
+      return true;
     }
-    return true;
+    //throw 'Invalid type';
+    console.log('Invalid type');
+    return false;
   }
-  console.log('Invalid type');
-  return false;
-}
-/*
-  Test Cases:
+  //Test Cases:
   console.log(isValidName("Frank") === true);
   console.log(isValidName(false) === false);
   console.log(isValidName(null) === false);
@@ -64,7 +65,7 @@ function isValidName(name){
   console.log(isValidName("") === false);
   console.log(isValidName("  \t\n") === false);
   console.log(isValidName("X") === false);
-*/
+
 
 /*
   Odev 4:
@@ -79,13 +80,49 @@ function isValidName(name){
   Ornek: katilimSaati("5", "30") 150 sonucunu vermelidir.
 */
 function katilimSaati(dersSayisi, dersSuresi){
-  for(let i = 0; i < arguments.length; i++) {
-    if(typeof(arguments[i]) != 'string' && typeof(arguments[i]) != 'number') {
-      console.log(arguments[i] + " " + typeof(arguments[i]) + " tipindedir. 'Number' ya da 'String' tipinde bir deger giriniz.");
-      return;
+    let restrictedTypes = ['boolean', 'null', 'undefined'];
+    for(let arg of arguments) {
+        if(restrictedTypes.includes(typeof arg) || arg === null) {
+            console.log(this.arg + ' ' + typeof arg + ' tipindedir.');
+            return false;
+        }
+        else if(typeof arg === 'string' && arg.length === 0 ) {
+            console.log(this.arg + ' ' + typeof arg + ' tipindedir.');
+            return false;
+        }
+        else if(isNaN(dersSayisi) || isNaN(dersSuresi)) {
+            console.log(this.arg + ' ' + typeof arg + ' tipindedir.');
+            return false;
+        }
+        else if(!isFinite(dersSayisi) || !isFinite(dersSuresi)) {
+            console.log(this.arg + ' ' + typeof arg + ' tipindedir.');
+            return false;
+        }
     }
-  }
-  return Number(dersSayisi) * Number(dersSuresi);
+    return Number(dersSayisi).toFixed() * Number(dersSuresi).toFixed();
 }
+
+// Test Cases
+console.log(!!katilimSaati(6, 10) == true);
+console.log(!!katilimSaati(6, "10") == true);
+console.log(!!katilimSaati("6", 10) == true);
+console.log(!!katilimSaati("6", "10") == true);
+console.log(katilimSaati("", 6) === false);
+console.log(katilimSaati(6, "") === false);
+console.log(katilimSaati("", "") === false);
+console.log(katilimSaati("foo", 6) === false);
+console.log(katilimSaati(6, "foo") === false);
+console.log(katilimSaati("foo", "bar") === false);
+console.log(katilimSaati(null, null) === false);
+console.log(katilimSaati(null, undefined) === false);
+console.log(katilimSaati(undefined, null) === false);
+console.log(katilimSaati(undefined, undefined) === false);
+console.log(katilimSaati(Infinity, Infinity) === false);
+console.log(katilimSaati(undefined, Infinity) === false);
+console.log(katilimSaati(Infinity, undefined) === false);
+console.log(katilimSaati(false, false) === false);
+console.log(katilimSaati(false, true) === false);
+console.log(katilimSaati(true, false) === false);
+console.log(katilimSaati(true, true) === false);
 
 
